@@ -11,7 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-plugins { `kotlin-dsl` }
+plugins {
+  `kotlin-dsl`
+  id("com.android.kotlin.multiplatform.library") version "9.0.1" apply false
+}
 
 repositories {
   google()
@@ -24,4 +27,5 @@ dependencies {
   implementation(libs.android.gradle.plugin)
   implementation(libs.android.gradle.api)
   implementation(libs.kotlin.gradle.plugin)
+  implementation("com.android.kotlin.multiplatform.library:com.android.kotlin.multiplatform.library.gradle.plugin:9.0.1")
 }
