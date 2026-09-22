@@ -25,6 +25,8 @@ object Media3Modules {
         Media3Module("libraries/common", "media3-common", "Media3 common module", allowKt = false),
       "lib-common-ktx" to
         Media3Module("libraries/common_ktx", "media3-common-ktx", "Media3 common KTX module"),
+      "lib-common-lite" to
+        Media3Module("libraries/common_lite", "media3-common-lite", "Media3 common kmp module", allowKt = false),
       "lib-container" to
         Media3Module(
           "libraries/container",
