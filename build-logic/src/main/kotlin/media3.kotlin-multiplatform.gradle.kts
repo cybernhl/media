@@ -11,18 +11,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-rootProject.name = "media3-build-logic"
 
-pluginManagement {
-  repositories {
-    google()
-    mavenCentral()
-    gradlePluginPortal()
-  }
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+
+plugins {
+    id("org.jetbrains.kotlin.multiplatform")
 }
 
-includeBuild("../build-logic-settings")
+group = "androidx.media3"
 
-dependencyResolutionManagement {
-  versionCatalogs { create("libs") { from(files("../gradle/libs.versions.toml")) } }
+val libs: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+extensions.configure<KotlinMultiplatformExtension>("kotlin") {
+    jvm {
+        compilations.all {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+                }
+            }
+        }
+    }
 }

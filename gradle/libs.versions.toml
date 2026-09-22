@@ -79,6 +79,16 @@ testParameterInjectorVersion = "1.22"
 truthVersion = "1.4.0"
 workRuntimeVersion = "2.8.1"
 runnerVersion = "1.7.0"
+kotlinxDatetimeVersion = "0.6.1"
+kermitVersion = "2.0.4"
+
+jetbrains-compose-multiplatform = "1.11.0"
+# https://mvnrepository.com/artifact/org.jetbrains.androidx.lifecycle/lifecycle-viewmodel-compose
+jetbrains-lifecycle = "2.10.0"
+# https://mvnrepository.com/artifact/org.jetbrains.androidx.navigation/navigation-compose
+jetbrains-navigation = "2.9.2"
+jetbrains-navigationevent = "1.1.0"
+jetbrains-androix-savedstate  = "1.4.0"
 
 [libraries]
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
@@ -167,7 +177,74 @@ strict-version-matcher-plugin = { module = "com.google.android.gms:strict-versio
 test-parameter-injector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version.ref = "testParameterInjectorVersion" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truthVersion" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runnerVersion" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetimeVersion" }
+kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermitVersion" }
+
+#region jetbrains
+#region jetbrains compose
+# https://github.com/JetBrains/compose-multiplatform
+# https://kotlinlang.org/docs/multiplatform/compose-multiplatform-and-jetpack-compose.html#compose-multiplatform-and-jetpack-compose-features
+jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-ui-util = { module = "org.jetbrains.compose.ui:ui-util", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-ui-graphics = { module = "org.jetbrains.compose.ui:ui-graphics", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-ui-text = { module = "org.jetbrains.compose.ui:ui-text", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-ui-window = { module = "org.jetbrains.compose.ui:ui-window", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "jetbrains-compose-multiplatform" }
+
+jetbrains-compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "jetbrains-compose-multiplatform" }
+
+
+jetbrains-compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "jetbrains-compose-multiplatform" }
+
+jetbrains-compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-foundation-layout = { module = "org.jetbrains.compose.foundation:foundation-layout", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-material = { module = "org.jetbrains.compose.material:material", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-material-ripple = { module = "org.jetbrains.compose.material:material-ripple", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "jetbrains-compose-multiplatform" }
+#jetbrains-compose-material3-window-size-class = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-material3-adaptive-navigation-suite = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-animation-core = { module = "org.jetbrains.compose.animation:animation-core", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-animation-graphics = { module = "org.jetbrains.compose.animation:animation-graphics", version.ref = "jetbrains-compose-multiplatform" }
+
+
+
+jetbrains-compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-runtime-saveable= { module = "org.jetbrains.compose.runtime:runtime-saveable", version.ref = "jetbrains-compose-multiplatform" }
+#endregion
+#region jetbrains androidx
+jetbrains-androidx-savedstate = { module = "org.jetbrains.androidx.savedstate:savedstate", version.ref = "jetbrains-androix-savedstate" }
+jetbrains-androidx-savedstate-compose = { module = "org.jetbrains.androidx.savedstate:savedstate-compose", version.ref = "jetbrains-androix-savedstate" }
+jetbrains-androidx-navigation-compose = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "jetbrains-navigation" }
+jetbrains-androidx-navigation-runtime = { group = "org.jetbrains.androidx.navigation", name = "navigation-runtime", version.ref = "jetbrains-navigation" }
+jetbrains-androidx-navigationevent-compose = { group = "org.jetbrains.androidx.navigationevent", name = "navigationevent-compose", version.ref = "jetbrains-navigationevent" }
+jetbrains-androidx-navigationevent-compose-desktop= { group = "org.jetbrains.androidx.navigationevent", name = "navigationevent-compose-desktop", version.ref = "jetbrains-navigationevent" }
+# https://mvnrepository.com/artifact/org.jetbrains.androidx.lifecycle/lifecycle-viewmodel-compose
+jetbrains-androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "jetbrains-lifecycle" }
+jetbrains-androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "jetbrains-lifecycle" }
+jetbrains-androidx-lifecycle-runtime = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime", version.ref = "jetbrains-lifecycle" }
+jetbrains-androidx-lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "jetbrains-lifecycle" }
+
+jetbrains-androidx-paging-compose = { module = "org.jetbrains.androidx.paging:paging-compose", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-androidx-paging-common = { module = "org.jetbrains.androidx.paging:paging-common", version.ref = "jetbrains-compose-multiplatform" }
+#endregion
+
+
+
 
 [plugins]
+android_application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android_library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+#Ref : https://developer.android.com/kotlin/multiplatform/plugin
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "androidGradlePlugin"}
+kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinGradlePlugin" }
+kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinGradlePlugin" }
+kotlin_android_extension = { id = "org.jetbrains.kotlin.android.extensions", version.ref = "kotlinGradlePlugin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinGradlePlugin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinComposeCompiler" }
+kotlin_serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinComposeCompiler" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-compose-multiplatform" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufGradlePlugin" }

@@ -31,19 +31,40 @@ buildscript {
     // https://maven.google.com/web/index.html#com.google.android.gms.strict-version-matcher-plugin
     classpath(libs.strict.version.matcher.plugin)
   }
+  configurations.classpath {
+    resolutionStrategy {
+      force("org.jetbrains:annotations:13.0")
+    }
+  }
 }
 
 plugins {
   id("media3.android-application") apply false
   id("media3.android-library") apply false
-  alias(libs.plugins.kotlin.compose.compiler) apply false
+
+  id("media3.android-kmp-library") apply false
+  id("media3.kotlin-multiplatform") apply false
+
   id("gradlebuild.media3-build-logic")
+  alias(libs.plugins.android.application) apply false
+  alias(libs.plugins.android.library) apply false
+  alias(libs.plugins.android.kotlin.multiplatform.library) apply false
+
+  alias(libs.plugins.kotlin.jvm) apply false
+  alias(libs.plugins.kotlin.android) apply false
+  alias(libs.plugins.kotlin.multiplatform) apply false
+
+  alias(libs.plugins.jetbrains.compose) apply false
+  alias(libs.plugins.kotlin.compose.compiler) apply false
+
+  alias(libs.plugins.kotlin.serialization) apply false
 }
 
 allprojects {
   repositories {
     google()
     mavenCentral()
+    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
     maven {
       url = uri("https://jitpack.io")
       content { includeGroup("com.github.philburk") }
