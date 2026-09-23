@@ -6,7 +6,7 @@
 
 ## 📑 文件導覽
 
-1. [**KMP 深入遷移與架構分析報告 (`KMP_MIGRATION_ANALYSIS.md`)**](./KMP_MIGRATION_ANALYSIS.md)
+1. [**KMP 深入遷移與架構分析報告 (`KMP_MIGRATION_ANALYSIS.md`)**](docs/KMP_MIGRATION_ANALYSIS.md)
    * 包含全套 5 大純 KMP 領域分類（二進位解析器、特化數據結構、音訊 DSP 演算法、媒體領域模型、時間與數學工具）。
    * Guava 依賴解耦與 KMP 替代方案對照表。
    * 平台強相依組件（OpenGL / Android System Services / Bundle）隔離策略。

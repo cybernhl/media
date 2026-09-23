@@ -22,13 +22,13 @@ import androidx.media3.common.util.UnstableApi
  * Complete and aligned with androidx.media3.common.AudioAttributes.
  */
 public class AudioAttributes private constructor(
-    public val contentType: Int,
-    public val flags: Int,
-    public val usage: Int,
-    public val allowedCapturePolicy: Int,
-    public val spatializationBehavior: Int,
-    @UnstableApi public val isContentSpatialized: Boolean,
-    @UnstableApi public val hapticChannelsMuted: Boolean
+    @JvmField public val contentType: Int,
+    @JvmField public val flags: Int,
+    @JvmField public val usage: Int,
+    @JvmField public val allowedCapturePolicy: Int,
+    @JvmField public val spatializationBehavior: Int,
+    @UnstableApi @JvmField public val isContentSpatialized: Boolean,
+    @UnstableApi @JvmField public val hapticChannelsMuted: Boolean
 ) {
 
     @UnstableApi
@@ -37,7 +37,7 @@ public class AudioAttributes private constructor(
     /** Returns the volume control stream for these audio attributes. */
     public fun getVolumeControlStream(): Int = getStreamTypeInternal()
 
-    @Deprecated("Use getVolumeControlStream() instead.")
+    @Deprecated("Get stream type instead.")
     @UnstableApi
     public fun getStreamType(): Int = getStreamTypeInternal()
 
@@ -127,6 +127,7 @@ public class AudioAttributes private constructor(
     }
 
     companion object {
+        @JvmField
         public val DEFAULT: AudioAttributes = Builder().build()
     }
 }

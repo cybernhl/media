@@ -4,10 +4,10 @@ package androidx.media3.common
  * 影像色彩資訊，對齊 androidx.media3.common.ColorInfo。
  */
 class ColorInfo(
-    val colorSpace: Int,
-    val colorRange: Int,
-    val colorTransfer: Int,
-    val hdrStaticInfo: ByteArray? = null
+    @JvmField val colorSpace: Int,
+    @JvmField val colorRange: Int,
+    @JvmField val colorTransfer: Int,
+    @JvmField val hdrStaticInfo: ByteArray? = null
 ) {
     companion object {
         const val COLOR_SPACE_BT709 = 1
@@ -18,6 +18,7 @@ class ColorInfo(
         const val COLOR_TRANSFER_ST2084 = 6
         const val COLOR_TRANSFER_HLG = 7
 
+        @JvmField
         val SDR_BT709 = ColorInfo(COLOR_SPACE_BT709, COLOR_RANGE_LIMITED, COLOR_TRANSFER_SDR)
     }
 }

@@ -15,25 +15,78 @@
  */
 package androidx.media3.common
 
+import androidx.media3.common.util.UnstableApi
+
 /**
- * A representation of a media timeline.
+ * A representation of a media timeline in Pure Kotlin KMP.
  */
-abstract class Timeline {
+public abstract class Timeline {
 
-    abstract val isEmpty: Boolean
+    public open val isEmpty: Boolean
+        get() = windowCount == 0
 
-    abstract fun getPeriod(periodIndex: Int, period: Period, setIds: Boolean): Period
+    public open val windowCount: Int
+        get() = 0
 
-    abstract fun getIndexOfPeriod(uid: Any): Int
+    public open val periodCount: Int
+        get() = 0
 
-    class Period {
-        var uid: Any? = null
-        var windowIndex: Int = 0
+    public open fun getWindow(windowIndex: Int, window: Window, defaultPositionProjectionUs: Long = 0): Window = window
+
+    public open fun getPeriod(periodIndex: Int, period: Period, setIds: Boolean = false): Period = period
+
+    public open fun getIndexOfPeriod(uid: Any): Int = C.INDEX_UNSET
+
+    public class Window {
+        public var mediaItem: MediaItem = MediaItem.EMPTY
+        public var presentationStartTimeMs: Long = C.TIME_UNSET
+        public var windowStartTimeMs: Long = C.TIME_UNSET
+        public var isSeekable: Boolean = false
+        public var isDynamic: Boolean = false
+        public var defaultPositionUs: Long = 0
+        public var durationUs: Long = C.TIME_UNSET
+        public var firstPeriodIndex: Int = 0
+        public var lastPeriodIndex: Int = 0
+
+        public fun set(
+            mediaItem: MediaItem,
+            presentationStartTimeMs: Long = C.TIME_UNSET,
+            windowStartTimeMs: Long = C.TIME_UNSET,
+            isSeekable: Boolean = false,
+            isDynamic: Boolean = false,
+            defaultPositionUs: Long = 0,
+            durationUs: Long = C.TIME_UNSET,
+            firstPeriodIndex: Int = 0,
+            lastPeriodIndex: Int = 0
+        ): Window = apply {
+            this.mediaItem = mediaItem
+            this.presentationStartTimeMs = presentationStartTimeMs
+            this.windowStartTimeMs = windowStartTimeMs
+            this.isSeekable = isSeekable
+            this.isDynamic = isDynamic
+            this.defaultPositionUs = defaultPositionUs
+            this.durationUs = durationUs
+            this.firstPeriodIndex = firstPeriodIndex
+            this.lastPeriodIndex = lastPeriodIndex
+        }
+    }
+
+    public class Period {
+        public var uid: Any? = null
+        public var windowIndex: Int = 0
+
+        public fun set(uid: Any?, windowIndex: Int): Period = apply {
+            this.uid = uid
+            this.windowIndex = windowIndex
+        }
     }
 
     companion object {
-        val EMPTY = object : Timeline() {
+        @JvmField
+        public val EMPTY: Timeline = object : Timeline() {
             override val isEmpty: Boolean = true
+            override val windowCount: Int = 0
+            override val periodCount: Int = 0
             override fun getPeriod(periodIndex: Int, period: Period, setIds: Boolean): Period = throw IndexOutOfBoundsException()
             override fun getIndexOfPeriod(uid: Any): Int = C.INDEX_UNSET
         }

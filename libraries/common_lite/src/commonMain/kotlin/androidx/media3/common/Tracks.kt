@@ -29,6 +29,7 @@ class Tracks(private val groups: List<Group> = emptyList()) {
     class Group(val trackType: Int, val isSelected: Boolean)
 
     companion object {
+        @JvmField
         val EMPTY = Tracks()
     }
 }

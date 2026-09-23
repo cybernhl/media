@@ -4,15 +4,16 @@ package androidx.media3.common
  * 媒體元資料 (精簡自 Media3 MediaMetadata.java)
  */
 data class MediaMetadata(
-    val title: CharSequence? = null,
-    val artist: CharSequence? = null,
-    val albumTitle: CharSequence? = null,
-    val albumArtist: CharSequence? = null,
-    val displayTitle: CharSequence? = null,
-    val subtitle: CharSequence? = null,
-    val description: CharSequence? = null
+    @JvmField val title: CharSequence? = null,
+    @JvmField val artist: CharSequence? = null,
+    @JvmField val albumTitle: CharSequence? = null,
+    @JvmField val albumArtist: CharSequence? = null,
+    @JvmField val displayTitle: CharSequence? = null,
+    @JvmField val subtitle: CharSequence? = null,
+    @JvmField val description: CharSequence? = null
 ) {
     companion object {
+        @JvmField
         val EMPTY = MediaMetadata()
     }
 

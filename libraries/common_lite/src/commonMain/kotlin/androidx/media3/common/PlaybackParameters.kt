@@ -23,8 +23,8 @@ import kotlin.math.roundToLong
  * Aligned with androidx.media3.common.PlaybackParameters.
  */
 public data class PlaybackParameters(
-    public val speed: Float = 1.0f,
-    public val pitch: Float = 1.0f
+    @JvmField public val speed: Float = 1.0f,
+    @JvmField public val pitch: Float = 1.0f
 ) {
     init {
         require(speed > 0f) { "speed must be > 0" }
@@ -42,6 +42,7 @@ public data class PlaybackParameters(
     public fun withPitch(pitch: Float): PlaybackParameters = copy(pitch = pitch)
 
     companion object {
+        @JvmField
         public val DEFAULT: PlaybackParameters = PlaybackParameters(1.0f, 1.0f)
     }
 }

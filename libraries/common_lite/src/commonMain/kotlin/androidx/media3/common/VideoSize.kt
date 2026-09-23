@@ -22,11 +22,11 @@ import androidx.media3.common.util.UnstableApi
  * Aligned with androidx.media3.common.VideoSize.
  */
 public data class VideoSize(
-    public val width: Int = 0,
-    public val height: Int = 0,
-    public val pixelWidthHeightRatio: Float = 1f,
+    @JvmField public val width: Int = 0,
+    @JvmField public val height: Int = 0,
+    @JvmField public val pixelWidthHeightRatio: Float = 1f,
     @Deprecated("Rotation is handled internally by player; always zero.")
-    public val unappliedRotationDegrees: Int = 0
+    @JvmField public val unappliedRotationDegrees: Int = 0
 ) {
 
     @UnstableApi
@@ -36,6 +36,7 @@ public data class VideoSize(
     public constructor(width: Int, height: Int, pixelWidthHeightRatio: Float) : this(width, height, pixelWidthHeightRatio, 0)
 
     companion object {
+        @JvmField
         public val UNKNOWN: VideoSize = VideoSize(0, 0)
     }
 }
