@@ -37,16 +37,52 @@ public abstract class Timeline {
 
     public open fun getIndexOfPeriod(uid: Any): Int = C.INDEX_UNSET
 
+    public open fun getPeriodByUid(periodUid: Any, period: Period): Period {
+        return getPeriod(getIndexOfPeriod(periodUid), period)
+    }
+
+    public open fun getUidOfPeriod(periodIndex: Int): Any {
+        val period = Period()
+        return getPeriod(periodIndex, period, /* setIds= */ true).uid!!
+    }
+
+    public open fun getNextWindowIndex(windowIndex: Int, @Player.RepeatMode repeatMode: Int, shuffleModeEnabled: Boolean): Int {
+        return when (repeatMode) {
+            Player.REPEAT_MODE_ONE -> windowIndex
+            Player.REPEAT_MODE_ALL -> if (windowIndex == getLastWindowIndex(shuffleModeEnabled)) getFirstWindowIndex(shuffleModeEnabled) else windowIndex + 1
+            Player.REPEAT_MODE_OFF -> if (windowIndex == getLastWindowIndex(shuffleModeEnabled)) C.INDEX_UNSET else windowIndex + 1
+            else -> throw IllegalStateException()
+        }
+    }
+
+    public open fun getPreviousWindowIndex(windowIndex: Int, @Player.RepeatMode repeatMode: Int, shuffleModeEnabled: Boolean): Int {
+        return when (repeatMode) {
+            Player.REPEAT_MODE_ONE -> windowIndex
+            Player.REPEAT_MODE_ALL -> if (windowIndex == getFirstWindowIndex(shuffleModeEnabled)) getLastWindowIndex(shuffleModeEnabled) else windowIndex - 1
+            Player.REPEAT_MODE_OFF -> if (windowIndex == getFirstWindowIndex(shuffleModeEnabled)) C.INDEX_UNSET else windowIndex - 1
+            else -> throw IllegalStateException()
+        }
+    }
+
+    public open fun getFirstWindowIndex(shuffleModeEnabled: Boolean): Int {
+        return if (isEmpty) C.INDEX_UNSET else 0
+    }
+
+    public open fun getLastWindowIndex(shuffleModeEnabled: Boolean): Int {
+        return if (isEmpty) C.INDEX_UNSET else windowCount - 1
+    }
+
     public class Window {
-        public var mediaItem: MediaItem = MediaItem.EMPTY
-        public var presentationStartTimeMs: Long = C.TIME_UNSET
-        public var windowStartTimeMs: Long = C.TIME_UNSET
-        public var isSeekable: Boolean = false
-        public var isDynamic: Boolean = false
-        public var defaultPositionUs: Long = 0
-        public var durationUs: Long = C.TIME_UNSET
-        public var firstPeriodIndex: Int = 0
-        public var lastPeriodIndex: Int = 0
+        @JvmField public var uid: Any = SINGLE_WINDOW_UID
+        @JvmField public var mediaItem: MediaItem = MediaItem.EMPTY
+        @JvmField public var presentationStartTimeMs: Long = C.TIME_UNSET
+        @JvmField public var windowStartTimeMs: Long = C.TIME_UNSET
+        @JvmField public var isSeekable: Boolean = false
+        @JvmField public var isDynamic: Boolean = false
+        @JvmField public var defaultPositionUs: Long = 0
+        @JvmField public var durationUs: Long = C.TIME_UNSET
+        @JvmField public var firstPeriodIndex: Int = 0
+        @JvmField public var lastPeriodIndex: Int = 0
 
         public fun set(
             mediaItem: MediaItem,
@@ -59,6 +95,7 @@ public abstract class Timeline {
             firstPeriodIndex: Int = 0,
             lastPeriodIndex: Int = 0
         ): Window = apply {
+            this.uid = SINGLE_WINDOW_UID
             this.mediaItem = mediaItem
             this.presentationStartTimeMs = presentationStartTimeMs
             this.windowStartTimeMs = windowStartTimeMs
@@ -69,11 +106,16 @@ public abstract class Timeline {
             this.firstPeriodIndex = firstPeriodIndex
             this.lastPeriodIndex = lastPeriodIndex
         }
+
+        companion object {
+            @JvmField
+            public val SINGLE_WINDOW_UID: Any = Any()
+        }
     }
 
     public class Period {
-        public var uid: Any? = null
-        public var windowIndex: Int = 0
+        @JvmField public var uid: Any? = null
+        @JvmField public var windowIndex: Int = 0
 
         public fun set(uid: Any?, windowIndex: Int): Period = apply {
             this.uid = uid

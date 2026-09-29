@@ -19,7 +19,7 @@ import androidx.media3.common.util.UnstableApi
 
 /**
  * Player interface definition in Pure Kotlin KMP.
- * Aligned with androidx.media3.common.Player.
+ * Complete and aligned with androidx.media3.common.Player.
  */
 public interface Player {
 
@@ -42,14 +42,50 @@ public interface Player {
     }
 
     companion object {
+        // Playback States
         public const val STATE_IDLE: Int = 1
         public const val STATE_BUFFERING: Int = 2
         public const val STATE_READY: Int = 3
         public const val STATE_ENDED: Int = 4
 
+        // PlayWhenReady Change Reasons
+        public const val PLAY_WHEN_READY_CHANGE_REASON_USER_REQUEST: Int = 1
+        public const val PLAY_WHEN_READY_CHANGE_REASON_AUDIO_FOCUS_LOSS: Int = 2
+        public const val PLAY_WHEN_READY_CHANGE_REASON_AUDIO_BECOMING_NOISY: Int = 3
+        public const val PLAY_WHEN_READY_CHANGE_REASON_REMOTE: Int = 4
+        public const val PLAY_WHEN_READY_CHANGE_REASON_END_OF_MEDIA_ITEM: Int = 5
+        public const val PLAY_WHEN_READY_CHANGE_REASON_SUPPRESSED_TOO_LONG: Int = 6
+
+        // Playback Suppression Reasons
+        public const val PLAYBACK_SUPPRESSION_REASON_NONE: Int = 0
+        public const val PLAYBACK_SUPPRESSION_REASON_TRANSIENT_AUDIO_FOCUS_LOSS: Int = 1
+        public const val PLAYBACK_SUPPRESSION_REASON_UNSUITABLE_AUDIO_ROUTE: Int = 2
+        public const val PLAYBACK_SUPPRESSION_REASON_UNSUITABLE_AUDIO_OUTPUT: Int = 3
+        public const val PLAYBACK_SUPPRESSION_REASON_SCRUBBING: Int = 4
+
+        // Repeat Modes
         public const val REPEAT_MODE_OFF: Int = 0
         public const val REPEAT_MODE_ONE: Int = 1
         public const val REPEAT_MODE_ALL: Int = 2
+
+        // Discontinuity Reasons
+        public const val DISCONTINUITY_REASON_AUTO_TRANSITION: Int = 0
+        public const val DISCONTINUITY_REASON_SEEK: Int = 1
+        public const val DISCONTINUITY_REASON_SEEK_ADJUSTMENT: Int = 2
+        public const val DISCONTINUITY_REASON_SKIP: Int = 3
+        public const val DISCONTINUITY_REASON_REMOVE: Int = 4
+        public const val DISCONTINUITY_REASON_INTERNAL: Int = 5
+        public const val DISCONTINUITY_REASON_SILENCE_SKIP: Int = 6
+
+        // Timeline Change Reasons
+        public const val TIMELINE_CHANGE_REASON_PLAYLIST_CHANGED: Int = 0
+        public const val TIMELINE_CHANGE_REASON_SOURCE_UPDATE: Int = 1
+
+        // Media Item Transition Reasons
+        public const val MEDIA_ITEM_TRANSITION_REASON_REPEAT: Int = 0
+        public const val MEDIA_ITEM_TRANSITION_REASON_AUTO: Int = 1
+        public const val MEDIA_ITEM_TRANSITION_REASON_SEEK: Int = 2
+        public const val MEDIA_ITEM_TRANSITION_REASON_PLAYLIST_CHANGED: Int = 3
 
         // Events
         public const val EVENT_TIMELINE_CHANGED: Int = 0
@@ -66,40 +102,68 @@ public interface Player {
         public const val EVENT_POSITION_DISCONTINUITY: Int = 11
         public const val EVENT_PLAYBACK_PARAMETERS_CHANGED: Int = 12
         public const val EVENT_AVAILABLE_COMMANDS_CHANGED: Int = 13
-        public const val EVENT_SEEK_BACK_INCREMENT_CHANGED: Int = 14
-        public const val EVENT_SEEK_FORWARD_INCREMENT_CHANGED: Int = 15
-        public const val EVENT_MEDIA_METADATA_CHANGED: Int = 16
-        public const val EVENT_PLAYLIST_METADATA_CHANGED: Int = 17
-        public const val EVENT_VOLUME_CHANGED: Int = 18
-        public const val EVENT_VIDEO_SIZE_CHANGED: Int = 19
-        public const val EVENT_RENDERED_FIRST_FRAME: Int = 20
+        public const val EVENT_MEDIA_METADATA_CHANGED: Int = 14
+        public const val EVENT_PLAYLIST_METADATA_CHANGED: Int = 15
+        public const val EVENT_SEEK_BACK_INCREMENT_CHANGED: Int = 16
+        public const val EVENT_SEEK_FORWARD_INCREMENT_CHANGED: Int = 17
+        public const val EVENT_MAX_SEEK_TO_PREVIOUS_POSITION_CHANGED: Int = 18
+        public const val EVENT_TRACK_SELECTION_PARAMETERS_CHANGED: Int = 19
+        public const val EVENT_AUDIO_ATTRIBUTES_CHANGED: Int = 20
+        public const val EVENT_AUDIO_SESSION_ID: Int = 21
+        public const val EVENT_VOLUME_CHANGED: Int = 22
+        public const val EVENT_SKIP_SILENCE_ENABLED_CHANGED: Int = 23
+        public const val EVENT_SURFACE_SIZE_CHANGED: Int = 24
+        public const val EVENT_VIDEO_SIZE_CHANGED: Int = 25
+        public const val EVENT_RENDERED_FIRST_FRAME: Int = 26
+        public const val EVENT_CUES: Int = 27
         public const val EVENT_METADATA: Int = 28
+        public const val EVENT_DEVICE_INFO_CHANGED: Int = 29
+        public const val EVENT_DEVICE_VOLUME_CHANGED: Int = 30
 
         // Commands
+        public const val COMMAND_INVALID: Int = -1
         public const val COMMAND_PLAY_PAUSE: Int = 1
         public const val COMMAND_PREPARE: Int = 2
         public const val COMMAND_STOP: Int = 3
-        public const val COMMAND_SEEK_IN_CURRENT_MEDIA_ITEM: Int = 4
-        public const val COMMAND_SEEK_TO_DEFAULT_POSITION: Int = 5
-        public const val COMMAND_SEEK_TO_MEDIA_ITEM: Int = 6
-        public const val COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM: Int = 7
-        public const val COMMAND_SEEK_TO_PREVIOUS: Int = 8
-        public const val COMMAND_SEEK_TO_NEXT_MEDIA_ITEM: Int = 9
-        public const val COMMAND_SEEK_TO_NEXT: Int = 10
+        public const val COMMAND_SEEK_TO_DEFAULT_POSITION: Int = 4
+        public const val COMMAND_SEEK_IN_CURRENT_MEDIA_ITEM: Int = 5
+        public const val COMMAND_SEEK_IN_CURRENT_WINDOW: Int = COMMAND_SEEK_IN_CURRENT_MEDIA_ITEM
+        public const val COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM: Int = 6
+        public const val COMMAND_SEEK_TO_PREVIOUS_WINDOW: Int = COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM
+        public const val COMMAND_SEEK_TO_PREVIOUS: Int = 7
+        public const val COMMAND_SEEK_TO_NEXT_MEDIA_ITEM: Int = 8
+        public const val COMMAND_SEEK_TO_NEXT_WINDOW: Int = COMMAND_SEEK_TO_NEXT_MEDIA_ITEM
+        public const val COMMAND_SEEK_TO_NEXT: Int = 9
+        public const val COMMAND_SEEK_TO_MEDIA_ITEM: Int = 10
+        public const val COMMAND_SEEK_TO_WINDOW: Int = COMMAND_SEEK_TO_MEDIA_ITEM
         public const val COMMAND_SEEK_BACK: Int = 11
         public const val COMMAND_SEEK_FORWARD: Int = 12
         public const val COMMAND_SET_SPEED_AND_PITCH: Int = 13
         public const val COMMAND_SET_PLAYBACK_SPEED: Int = 13
-        public const val COMMAND_SET_REPEAT_MODE: Int = 14
-        public const val COMMAND_SET_SHUFFLE_MODE: Int = 15
-        public const val COMMAND_CHANGE_MEDIA_ITEMS: Int = 16
-        public const val COMMAND_GET_CURRENT_MEDIA_ITEM: Int = 17
-        public const val COMMAND_GET_TIMELINE: Int = 18
-        public const val COMMAND_GET_METADATA: Int = 19
-        public const val COMMAND_SET_VIDEO_SURFACE: Int = 20
-        public const val COMMAND_GET_VOLUME: Int = 21
-        public const val COMMAND_SET_VOLUME: Int = 22
-        public const val COMMAND_GET_TRACKS: Int = 23
+        public const val COMMAND_SET_SHUFFLE_MODE: Int = 14
+        public const val COMMAND_SET_REPEAT_MODE: Int = 15
+        public const val COMMAND_GET_CURRENT_MEDIA_ITEM: Int = 16
+        public const val COMMAND_GET_TIMELINE: Int = 17
+        public const val COMMAND_GET_MEDIA_ITEMS_METADATA: Int = 18
+        public const val COMMAND_GET_METADATA: Int = 18
+        public const val COMMAND_SET_MEDIA_ITEMS_METADATA: Int = 19
+        public const val COMMAND_SET_PLAYLIST_METADATA: Int = 19
+        public const val COMMAND_CHANGE_MEDIA_ITEMS: Int = 20
+        public const val COMMAND_GET_AUDIO_ATTRIBUTES: Int = 21
+        public const val COMMAND_GET_VOLUME: Int = 22
+        public const val COMMAND_GET_DEVICE_VOLUME: Int = 23
+        public const val COMMAND_SET_VOLUME: Int = 24
+        public const val COMMAND_SET_DEVICE_VOLUME: Int = 25
+        public const val COMMAND_ADJUST_DEVICE_VOLUME: Int = 26
+        public const val COMMAND_SET_VIDEO_SURFACE: Int = 27
+        public const val COMMAND_GET_TEXT: Int = 28
+        public const val COMMAND_SET_TRACK_SELECTION_PARAMETERS: Int = 29
+        public const val COMMAND_GET_TRACKS: Int = 30
+        public const val COMMAND_SET_MEDIA_ITEM: Int = 31
+        public const val COMMAND_RELEASE: Int = 32
+        public const val COMMAND_SET_DEVICE_VOLUME_WITH_FLAGS: Int = 33
+        public const val COMMAND_ADJUST_DEVICE_VOLUME_WITH_FLAGS: Int = 34
+        public const val COMMAND_SET_AUDIO_ATTRIBUTES: Int = 35
         public const val COMMAND_CHANGE_PLAYER_STATE: Int = 24
     }
 
@@ -182,4 +246,33 @@ public interface Player {
 
     public fun addListener(listener: Listener)
     public fun removeListener(listener: Listener)
+
+    @Target(AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FIELD, AnnotationTarget.LOCAL_VARIABLE, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER)
+    public annotation class DiscontinuityReason
+
+    @Target(AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FIELD, AnnotationTarget.LOCAL_VARIABLE, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER)
+    public annotation class PlaybackSuppressionReason
+
+    @Target(AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FIELD, AnnotationTarget.LOCAL_VARIABLE, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER)
+    public annotation class TimelineChangeReason
+
+    @Target(AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FIELD, AnnotationTarget.LOCAL_VARIABLE, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER)
+    public annotation class State
+
+    @Target(AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FIELD, AnnotationTarget.LOCAL_VARIABLE, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER)
+    public annotation class PlayWhenReadyChangeReason
+
+    @Target(AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FIELD, AnnotationTarget.LOCAL_VARIABLE, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER)
+    public annotation class MediaItemTransitionReason
+
+    public data class PositionInfo(
+        @JvmField public val windowUid: Any?,
+        @JvmField public val windowIndex: Int,
+        @JvmField public val periodUid: Any?,
+        @JvmField public val periodIndex: Int,
+        @JvmField public val positionMs: Long,
+        @JvmField public val contentPositionMs: Long,
+        @JvmField public val adGroupIndex: Int,
+        @JvmField public val adIndexInAdGroup: Int
+    )
 }

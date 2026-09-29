@@ -16,6 +16,7 @@
 package androidx.media3.common
 
 import androidx.media3.common.util.UnstableApi
+import kotlin.jvm.JvmField
 
 /**
  * Represents the video size in Pure Kotlin KMP.

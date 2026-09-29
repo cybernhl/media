@@ -74,35 +74,9 @@
 
 ---
 
-## 二、 遷移至 CMP (JetBrains Compose) 時的編譯器雜湊與 `NoSuchMethodError` 陷阱
-
-在將 UI 模組或元件改寫為 CMP (JetBrains Compose Multiplatform) 時（例如 `PreviousButton` 等帶有大量 `@Composable` 預設參數與多載的元件），常會遇到類似以下錯誤：
-`java.lang.NoSuchMethodError: No static method PreviousButton-FHprtrg(...)`
-
-### 1. 成因分析
-* **預設參數雜湊混淆 (Default Argument Mangling)**：
-  當 `@Composable` 函式具有多個預設引數（如預設圖示, 顏色, 點擊行為等）時，Kotlin 編譯器會在底層生成帶有雜湊後綴（如 `-FHprtrg`）的合成靜態方法，用以處理預設參數的傳遞。
-* **增量編譯快取不一致 (Stale Incremental Build Cache)**：
-  當函式庫（如 `ui_compose_material3`）中的元件簽名或預設參數被重構後，如果未完全清理快取，呼叫端模組會繼續尋找舊版的雜湊方法名稱（例如舊的 `-FHprtrg`），導致執行期發生 `NoSuchMethodError`。
-* **多載與 `@JvmName` 衝突**：
-  同時提供多個同名且帶有預設參數的多載函式（例如同時支援 `Painter` 與 `ImageVector` 的 `PreviousButton`），會使編譯器產生大量複雜的雜湊靜態方法，大幅增加 ABI 不一致的風險。
-
-### 2. 預防與解決方案
-1. **強制執行 Clean Build**：
-   每次對跨平台 UI 模組進行重構後，必須徹底清除快取：
-   ```powershell
-   ./gradlew clean
-   ./gradlew build --refresh-dependencies
-   ```
-2. **精簡預設參數**：
-   避免在複雜的跨平台 Compose 元件中堆疊過多的 `@Composable` Lambda 預設參數，必要時改用明確的多載或 Builder 模式，減少編譯器產生的 mangled 靜態方法複雜度。
-
----
-
-## 三、 總結與檢驗結果
+## 二、 總結與檢驗結果
 
 經過上述全面檢討與修正：
-1. `common_lite` 的資料模型類別均已具備完整的 **Java 互通性 (`@JvmField`)**。
-2. 擴充函式已具備 **KMP 跨平台相容性** 與 **官方二進位簽名對齊**。
-3. 識別並記錄了 CMP 遷移過程中的 **編譯器預設參數雜湊 (`NoSuchMethodError`) 陷阱與解法**。
-4. 經 Gradle 驗證，`:lib-common-lite:assemble` 可**零錯誤, 零警告**順利建置完成。
+1. `common_lite` 的資料模型類別（`PlaybackParameters`、`VideoSize`、`AudioAttributes`、`ColorInfo`、`MediaMetadata`、`MediaItem`、`Timeline`、`Tracks`）均已具備完整的 **Java 互通性 (`@JvmField`)**。
+2. 擴充函式（`PlayerExtensions.kt`）已具備 **KMP 跨平台相容性** 與 **官方二進位簽名對齊**。
+3. 經 Gradle 驗證，`:lib-common-lite:assemble` 可**零錯誤、零警告**順利建置完成。

@@ -16,13 +16,15 @@
 package androidx.media3.common
 
 import androidx.media3.common.util.UnstableApi
+import kotlin.jvm.JvmField
+import kotlin.jvm.JvmOverloads
 import kotlin.math.roundToLong
 
 /**
  * Parameters that apply to playback, including speed and pitch setting in Pure Kotlin KMP.
  * Aligned with androidx.media3.common.PlaybackParameters.
  */
-public data class PlaybackParameters(
+public data class PlaybackParameters @JvmOverloads constructor(
     @JvmField public val speed: Float = 1.0f,
     @JvmField public val pitch: Float = 1.0f
 ) {

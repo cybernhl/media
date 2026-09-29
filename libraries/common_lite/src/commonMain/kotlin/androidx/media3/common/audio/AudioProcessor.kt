@@ -8,6 +8,7 @@ import java.nio.ByteOrder
  */
 interface AudioProcessor {
     companion object {
+        @JvmField
         val EMPTY_BUFFER: ByteBuffer = ByteBuffer.allocateDirect(0).order(ByteOrder.nativeOrder())
     }
 
@@ -16,6 +17,8 @@ interface AudioProcessor {
             val NOT_SET = AudioFormat(-1, -1, -1)
         }
     }
+
+    class StreamMetadata(@JvmField val sampleRate: Int, @JvmField val channelCount: Int, @JvmField val encoding: Int)
 
     class UnhandledAudioFormatException(format: AudioFormat) : Exception("Unhandled format: $format")
 

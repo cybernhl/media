@@ -1,20 +1,38 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package androidx.media3.common
 
-/**
- * 媒體類型定義，對齊 androidx.media3.common.MimeTypes。
- */
-object MimeTypes {
-    const val VIDEO_UNKNOWN = "video/x-unknown"
-    const val VIDEO_H264 = "video/avc"
-    const val VIDEO_H265 = "video/hevc"
-    const val VIDEO_VP9 = "video/x-vnd.on2.vp9"
-    
-    const val AUDIO_UNKNOWN = "audio/x-unknown"
-    const val AUDIO_AAC = "audio/mp4a-latm"
-    const val AUDIO_MPEG = "audio/mpeg"
-    const val AUDIO_RAW = "audio/raw"
-    const val AUDIO_OPUS = "audio/opus"
+import kotlin.jvm.JvmStatic
 
-    fun isVideo(mimeType: String?): Boolean = mimeType?.startsWith("video/") == true
-    fun isAudio(mimeType: String?): Boolean = mimeType?.startsWith("audio/") == true
+object MimeTypes {
+    public const val VIDEO_UNKNOWN: String = "video/x-unknown"
+    public const val VIDEO_H264: String = "video/avc"
+    public const val VIDEO_H265: String = "video/hevc"
+    public const val VIDEO_VP9: String = "video/x-vnd.on2.vp9"
+
+    public const val AUDIO_UNKNOWN: String = "audio/x-unknown"
+    public const val AUDIO_AAC: String = "audio/mp4a-latm"
+    public const val AUDIO_MPEG: String = "audio/mpeg"
+    public const val AUDIO_RAW: String = "audio/raw"
+    public const val AUDIO_OPUS: String = "audio/opus"
+
+    @JvmStatic
+    public fun isVideo(mimeType: String?): Boolean = mimeType?.startsWith("video/") == true
+
+    @JvmStatic
+    public fun isAudio(mimeType: String?): Boolean = mimeType?.startsWith("audio/") == true
 }

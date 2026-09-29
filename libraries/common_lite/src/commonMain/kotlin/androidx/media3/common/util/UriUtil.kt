@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package androidx.media3.common.util
+
+import kotlin.jvm.JvmStatic
 
 /** Utility methods for manipulating URIs in Pure Kotlin. */
 @UnstableApi
@@ -24,6 +27,7 @@ public object UriUtil {
     private const val QUERY = 2
     private const val FRAGMENT = 3
 
+    @JvmStatic
     public fun resolve(baseUri: String?, referenceUri: String?): String {
         val uri = StringBuilder()
         val base = baseUri ?: ""

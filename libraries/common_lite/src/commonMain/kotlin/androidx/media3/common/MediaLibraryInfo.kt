@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package androidx.media3.common
 
 import androidx.media3.common.util.UnstableApi
+import kotlin.jvm.JvmStatic
 
 /**
  * Information about the media libraries in Pure Kotlin KMP.
@@ -33,8 +35,10 @@ public object MediaLibraryInfo {
 
     private var enableWorkarounds: Boolean = true
 
+    @JvmStatic
     public fun enableWorkarounds(): Boolean = enableWorkarounds
 
+    @JvmStatic
     public fun setEnableWorkarounds(enable: Boolean) {
         enableWorkarounds = enable
     }
@@ -42,8 +46,10 @@ public object MediaLibraryInfo {
     private val registeredModulesSet = mutableSetOf<String>()
     private var registeredModulesString = "media3.common"
 
+    @JvmStatic
     public fun registeredModules(): String = registeredModulesString
 
+    @JvmStatic
     public fun registerModule(name: String) {
         if (registeredModulesSet.add(name)) {
             registeredModulesString = "$registeredModulesString, $name"
