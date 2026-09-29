@@ -12,35 +12,62 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
+
 plugins {
-  id("media3.android-library")
-  id("media3.publish")
-  alias(libs.plugins.kotlin.compose.compiler)
+    id("media3.kotlin-multiplatform")
+    id("media3.android-kmp-library")
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.kotlin.compose.compiler)
 }
 
-android {
-  namespace = "androidx.media3.ui.compose.material3"
+group = "androidx.media3.ui.compose.material3"
 
-  lint { baseline = file("lint-baseline.xml") }
+kotlin {
+    targets.withType(KotlinMultiplatformAndroidLibraryTarget::class.java).configureEach {
+        namespace = "androidx.media3.ui.compose.material3"
+        androidResources {
+            enable = true
+        }
+    }
 
-  buildFeatures { compose = true }
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                compileOnly(project(":lib-common-lite"))
+                compileOnly(project(":lib-ui-compose"))
+
+                implementation(libs.jetbrains.compose.runtime)
+                implementation(libs.jetbrains.compose.foundation)
+                implementation(libs.jetbrains.compose.material3)
+                implementation(libs.jetbrains.compose.ui)
+                implementation(libs.jetbrains.compose.ui.util)
+                implementation(libs.jetbrains.compose.components.resources)
+                implementation(libs.kotlinx.coroutines.core)
+            }
+        }
+
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.androidx.core)
+                implementation(libs.kotlinx.coroutines.guava)
+            }
+        }
+
+        val jvmMain by getting {
+            dependencies {
+            }
+        }
+    }
 }
 
-dependencies {
-  api(project(":lib-common"))
-  api(project(":lib-common-ktx"))
-  api(project(":lib-ui-compose"))
-
-  api(platform(libs.androidx.compose.bom))
-  api(libs.androidx.compose.foundation)
-  api(libs.androidx.compose.material3)
-
-  // TODO: b/509786666 - This dependency is added as part of the Artwork implementation in
-  // MiniController. This might need updating once the actual implementation is done.
-  implementation(libs.kotlinx.coroutines.guava)
-
-  testImplementation(libs.androidx.compose.ui.test)
-  testImplementation(libs.androidx.compose.ui.test.junit4)
-  testImplementation(project(":test-utils"))
-  testImplementation(libs.robolectric)
+compose.resources {
+    packageOfResClass = "androidx.media3.ui.compose.material3"
+    publicResClass = true
 }
