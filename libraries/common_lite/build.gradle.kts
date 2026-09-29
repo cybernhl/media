@@ -1,15 +1,15 @@
-import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 // Copyright (C) 2026 The Android Open Source Project
+
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 
 plugins {
     id("media3.kotlin-multiplatform")
     id("media3.android-kmp-library")
+    id("media3.publish")
 }
 
-group = "androidx.media3.common"
-version = "1.0-SNAPSHOT"
+group = "idv.neo.media.media3"
+version = libs.versions.releaseVersion.get()
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor(0, "seconds")
@@ -26,7 +26,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-
                 // Pure Kotlin Multiplatform dependencies
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.kermit)

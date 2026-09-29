@@ -80,7 +80,7 @@ allprojects {
       }
     layout.buildDirectory.set(File(externalBuildDirFile, project.name))
   }
-  group = "androidx.media3"
+  group = "idv.neo.media.media3"
 }
 
 tasks.register("printReleaseArtifactIds") {

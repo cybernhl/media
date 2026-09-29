@@ -12,12 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+
 plugins {
   id("media3.android-library")
   id("media3.publish")
+  alias(libs.plugins.kotlin.android)
 }
 
-android { namespace = "androidx.media3.common.ktx" }
+android {
+  namespace = "androidx.media3.common.ktx"
+
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+  }
+}
+
+configure<KotlinAndroidProjectExtension> {
+  compilerOptions {
+    jvmTarget.set(JvmTarget.JVM_11)
+  }
+}
 
 dependencies {
   api(project(":lib-common"))

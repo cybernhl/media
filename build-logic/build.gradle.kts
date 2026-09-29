@@ -13,7 +13,7 @@
 // limitations under the License.
 plugins {
   `kotlin-dsl`
-  id("com.android.kotlin.multiplatform.library") version "9.0.1" apply false
+  id("com.android.kotlin.multiplatform.library") version "8.13.1" apply false
 }
 
 repositories {
@@ -27,5 +27,5 @@ dependencies {
   implementation(libs.android.gradle.plugin)
   implementation(libs.android.gradle.api)
   implementation(libs.kotlin.gradle.plugin)
-  implementation("com.android.kotlin.multiplatform.library:com.android.kotlin.multiplatform.library.gradle.plugin:9.0.1")
+  implementation("com.android.kotlin.multiplatform.library:com.android.kotlin.multiplatform.library.gradle.plugin:8.13.1")
 }

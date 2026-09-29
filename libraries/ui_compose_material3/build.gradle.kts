@@ -17,11 +17,13 @@ import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 plugins {
     id("media3.kotlin-multiplatform")
     id("media3.android-kmp-library")
+    id("media3.publish")
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.compose.compiler)
 }
 
-group = "androidx.media3.ui.compose.material3"
+group = "idv.neo.media.media3"
+version = libs.versions.releaseVersion.get()
 
 kotlin {
     targets.withType(KotlinMultiplatformAndroidLibraryTarget::class.java).configureEach {

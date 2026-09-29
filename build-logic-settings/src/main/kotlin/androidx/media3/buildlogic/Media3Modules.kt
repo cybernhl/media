@@ -115,8 +115,8 @@ object Media3Modules {
           "media3-effect-lottie",
           "Media3 Effect Lottie module",
         ),
-      "lib-effect-ndk" to
-        Media3Module("libraries/effect_ndk", "media3-effect-ndk", "Media3 Effect NDK module"),
+//      "lib-effect-ndk" to
+//        Media3Module("libraries/effect_ndk", "media3-effect-ndk", "Media3 Effect NDK module"),
       "lib-exoplayer" to
         Media3Module(
           "libraries/exoplayer",
@@ -219,8 +219,8 @@ object Media3Modules {
       // go/keep-sorted start
       "demo" to Media3Module("demos/main", includeInCompositeBuild = false),
       "demo-cast" to Media3Module("demos/cast", includeInCompositeBuild = false),
-      "demo-compose" to Media3Module("demos/compose", includeInCompositeBuild = false),
-      "demo-composition" to Media3Module("demos/composition", includeInCompositeBuild = false),
+//      "demo-compose" to Media3Module("demos/compose", includeInCompositeBuild = false),
+//      "demo-composition" to Media3Module("demos/composition", includeInCompositeBuild = false),
       "demo-effect" to Media3Module("demos/effect", includeInCompositeBuild = false),
       "demo-gl" to Media3Module("demos/gl", includeInCompositeBuild = false),
       "demo-session" to Media3Module("demos/session", includeInCompositeBuild = false),

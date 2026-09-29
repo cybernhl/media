@@ -1,0 +1,6 @@
+jdk:
+  - openjdk17
+before_install:
+  - chmod +x gradlew
+install:
+  - ./gradlew :lib-common-lite:publishToMavenLocal :lib-ui-compose:publishToMavenLocal :lib-ui-compose-material3:publishToMavenLocal -x test

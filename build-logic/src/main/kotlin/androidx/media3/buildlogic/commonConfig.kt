@@ -26,7 +26,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
-fun Project.configureCommonConfig(android: CommonExtension, libs: VersionCatalog) {
+fun Project.configureCommonConfig(android: CommonExtension<*, *, *, *, *, *>, libs: VersionCatalog) {
   android.apply {
     compileSdk = libs.findVersion("compileSdkVersion").get().requiredVersion.toInt()
 
@@ -84,10 +84,12 @@ fun Project.configureCommonConfig(android: CommonExtension, libs: VersionCatalog
     }
   }
 
-  extensions.configure<KotlinAndroidProjectExtension>("kotlin") {
-    compilerOptions {
-      freeCompilerArgs.add("-Xannotation-default-target=param-property")
-      freeCompilerArgs.add("-Xwarning-level=OPT_IN_USAGE:error")
+  plugins.withId("org.jetbrains.kotlin.android") {
+    extensions.configure<KotlinAndroidProjectExtension>("kotlin") {
+      compilerOptions {
+        freeCompilerArgs.add("-Xannotation-default-target=param-property")
+        freeCompilerArgs.add("-Xwarning-level=OPT_IN_USAGE:error")
+      }
     }
   }
 

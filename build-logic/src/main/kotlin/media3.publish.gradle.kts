@@ -24,7 +24,9 @@ plugins { id("maven-publish") }
 val libs = project.extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 plugins.withId("com.android.library") {
-  configure<LibraryExtension> { publishing { singleVariant("release") { withSourcesJar() } } }
+  try {
+    configure<LibraryExtension> { publishing { singleVariant("release") { withSourcesJar() } } }
+  } catch (_: Throwable) {}
 }
 
 afterEvaluate {
@@ -39,28 +41,33 @@ afterEvaluate {
       }
 
       publications {
-        register<MavenPublication>("release") {
-          from(components["release"])
-          groupId = "androidx.media3"
-          artifactId = Media3Modules.EXTERNAL_MODULES[project.name]?.artifactId ?: ""
-          version = libs.findVersion("releaseVersion").get().requiredVersion
+        if (publications.findByName("release") == null) {
+          register<MavenPublication>("release") {
+            val component = components.findByName("release") ?: components.findByName("kotlin")
+            if (component != null) {
+              from(component)
+            }
+            groupId = project.group.toString()
+            artifactId = Media3Modules.EXTERNAL_MODULES[project.name]?.artifactId ?: project.name
+            version = libs.findVersion("releaseVersion").get().requiredVersion
 
-          pom {
-            name.set(Media3Modules.EXTERNAL_MODULES[project.name]?.name ?: "")
+            pom {
+              name.set(Media3Modules.EXTERNAL_MODULES[project.name]?.name ?: project.name)
 
-            licenses {
-              license {
-                name.set("The Apache Software License, Version 2.0")
-                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                distribution.set("repo")
+              licenses {
+                license {
+                  name.set("The Apache Software License, Version 2.0")
+                  url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                  distribution.set("repo")
+                }
               }
+              developers { developer { name.set("The Android Open Source Project") } }
+              scm {
+                connection.set("scm:git:https://github.com/androidx/media.git")
+                url.set("https://github.com/androidx/media")
+              }
+              withXml { addMissingAarTypeToXml(this) }
             }
-            developers { developer { name.set("The Android Open Source Project") } }
-            scm {
-              connection.set("scm:git:https://github.com/androidx/media.git")
-              url.set("https://github.com/androidx/media")
-            }
-            withXml { addMissingAarTypeToXml(this) }
           }
         }
       }
