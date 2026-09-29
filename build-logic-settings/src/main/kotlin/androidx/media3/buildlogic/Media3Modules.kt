@@ -216,30 +216,5 @@ object Media3Modules {
           "Media3 robolectric test utils module",
         ),
       // go/keep-sorted end
-      // go/keep-sorted start
-      "demo" to Media3Module("demos/main", includeInCompositeBuild = false),
-      "demo-cast" to Media3Module("demos/cast", includeInCompositeBuild = false),
-//      "demo-compose" to Media3Module("demos/compose", includeInCompositeBuild = false),
-//      "demo-composition" to Media3Module("demos/composition", includeInCompositeBuild = false),
-      "demo-effect" to Media3Module("demos/effect", includeInCompositeBuild = false),
-      "demo-gl" to Media3Module("demos/gl", includeInCompositeBuild = false),
-      "demo-session" to Media3Module("demos/session", includeInCompositeBuild = false),
-      "demo-session-automotive" to
-        Media3Module("demos/session_automotive", includeInCompositeBuild = false),
-      "demo-session-service" to
-        Media3Module("demos/session_service", includeInCompositeBuild = false),
-      "demo-shortform" to Media3Module("demos/shortform", includeInCompositeBuild = false),
-      "demo-surface" to Media3Module("demos/surface", includeInCompositeBuild = false),
-      "demo-transformer" to Media3Module("demos/transformer", includeInCompositeBuild = false),
-      "doc-samples" to Media3Module("docsamples", includeInCompositeBuild = false),
-      "test-exoplayer-playback" to
-        Media3Module("libraries/test_exoplayer_playback", includeInCompositeBuild = false),
-      "test-proguard" to Media3Module("libraries/test_proguard", includeInCompositeBuild = false),
-      "test-session-common" to
-        Media3Module("libraries/test_session_common", includeInCompositeBuild = false),
-      "test-session-current" to
-        Media3Module("libraries/test_session_current", includeInCompositeBuild = false),
-      "testapp-controller" to Media3Module("testapps/controller", includeInCompositeBuild = false),
-      // go/keep-sorted end
     )
 }
