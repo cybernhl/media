@@ -19,6 +19,7 @@ import androidx.media3.common.MediaLibraryInfo
 import androidx.media3.common.Player
 import androidx.media3.common.listenTo
 import androidx.media3.common.util.UnstableApi
+import kotlinx.coroutines.awaitCancellation
 
 /**
  * Utility to observe [Player] states by listening to events.
@@ -32,8 +33,8 @@ import androidx.media3.common.util.UnstableApi
 @UnstableApi
 class PlayerStateObserver(
   private val player: Player,
-  private val firstEvent: @Player.Event Int,
-  vararg otherEvents: @Player.Event Int,
+  private val firstEvent: Int,
+  vararg otherEvents: Int,
   private val stateUpdater: (Player) -> Unit,
 ) {
 
@@ -47,6 +48,7 @@ class PlayerStateObserver(
   suspend fun observe(): Nothing {
     stateUpdater.invoke(player)
     player.listenTo(firstEvent, *otherEventsArray) { stateUpdater.invoke(player) }
+    awaitCancellation()
   }
 
   companion object {
@@ -59,14 +61,14 @@ class PlayerStateObserver(
 /**
  * Utility to observe [Player] states by listening to events.
  *
- * @param firstEvent The first [Player.Event] to listen to
- * @param otherEvents Additional [Player.Event] types to listen to
+ * @param firstEvent The first [Event] to listen to
+ * @param otherEvents Additional [Event] types to listen to
  * @param stateUpdater The operation to trigger initially and whenever one of the configured events
  *   happen
  */
 @UnstableApi
 fun Player.observeState(
-  firstEvent: @Player.Event Int,
-  vararg otherEvents: @Player.Event Int,
+  firstEvent: Int,
+  vararg otherEvents: Int,
   stateUpdater: (Player) -> Unit,
 ) = PlayerStateObserver(player = this, firstEvent, *otherEvents, stateUpdater = stateUpdater)

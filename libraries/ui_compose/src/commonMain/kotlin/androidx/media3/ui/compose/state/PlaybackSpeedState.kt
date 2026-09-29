@@ -63,7 +63,7 @@ class PlaybackSpeedState(private val player: Player?) {
 
   private var isSpeedTemporarilyOverridden = false
 
-  private var originalSpeedBeforeOverride by mutableFloatStateOf(C.RATE_UNSET)
+  private var originalSpeedBeforeOverride = C.RATE_UNSET
 
   private val playerStateObserver: PlayerStateObserver? =
     player?.observeState(

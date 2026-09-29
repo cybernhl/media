@@ -114,7 +114,7 @@ class PresentationState(keepContentOnReset: Boolean = false) {
       this@PresentationState.player = player
       player?.listen { events ->
         if (events.contains(Player.EVENT_VIDEO_SIZE_CHANGED)) {
-          if (videoSize != VideoSize.UNKNOWN && playbackState != Player.STATE_IDLE) {
+          if (player.videoSize != VideoSize.UNKNOWN && player.playbackState != Player.STATE_IDLE) {
             this@PresentationState.videoSizeDp = getVideoSizeDp(player)
           }
         }

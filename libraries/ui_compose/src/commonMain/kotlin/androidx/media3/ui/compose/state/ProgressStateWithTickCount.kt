@@ -29,7 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import com.google.common.base.Preconditions.checkState
+import androidx.media3.common.util.Assertions.checkState
 import kotlinx.coroutines.CoroutineScope
 
 /**

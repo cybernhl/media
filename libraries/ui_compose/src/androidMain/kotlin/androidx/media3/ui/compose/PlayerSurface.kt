@@ -20,12 +20,12 @@ import android.content.Context
 import android.graphics.Canvas
 import android.os.Build.FINGERPRINT
 import android.os.Build.VERSION.SDK_INT
+import android.util.Log
 import android.view.SurfaceControl
 import android.view.SurfaceView
 import android.view.TextureView
 import android.view.View
 import android.window.SurfaceSyncGroup
-import androidx.annotation.IntDef
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -37,30 +37,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.Player
+import androidx.media3.common.VideoSize
 import androidx.media3.common.util.UnstableApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * Provides a dedicated drawing [android.view.Surface] for media playbacks using a [Player].
- *
- * The player's video output is displayed with either a [android.view.SurfaceView] or a
- * [android.view.TextureView].
- *
- * [Player] takes care of attaching the rendered output to the [android.view.Surface] and clearing
- * it, when it is destroyed.
- *
- * See
- * [Choosing a surface type](https://developer.android.com/media/media3/ui/playerview#surfacetype)
- * for more information.
+ * Android implementation of [PlayerSurface].
  */
 @UnstableApi
 @Composable
-fun PlayerSurface(
+public actual fun PlayerSurface(
   player: Player?,
-  modifier: Modifier = Modifier,
-  surfaceType: @SurfaceType Int = SURFACE_TYPE_SURFACE_VIEW,
+  modifier: Modifier,
+  surfaceType: @SurfaceType Int,
 ) {
   when (surfaceType) {
     SURFACE_TYPE_SURFACE_VIEW -> {
@@ -103,8 +94,8 @@ fun PlayerSurface(
         player,
         modifier,
         createView = createSurfaceView,
-        setVideoView = Player::setVideoSurfaceView,
-        clearVideoView = Player::clearVideoSurfaceView,
+        setVideoView = Player::setVideoSurfaceViewSafe,
+        clearVideoView = Player::clearVideoSurfaceViewSafe,
         onSurfaceSizeChanged = onSurfaceSizeChanged,
       )
     }
@@ -113,10 +104,50 @@ fun PlayerSurface(
         player,
         modifier,
         createView = ::TextureView,
-        setVideoView = Player::setVideoTextureView,
-        clearVideoView = Player::clearVideoTextureView,
+        setVideoView = Player::setVideoTextureViewSafe,
+        clearVideoView = Player::clearVideoTextureViewSafe,
       )
     else -> throw IllegalArgumentException("Unrecognized surface type: $surfaceType")
+  }
+}
+
+private fun Player.setVideoSurfaceViewSafe(surfaceView: SurfaceView) {
+  try {
+    val method = javaClass.getMethod("setVideoSurfaceView", SurfaceView::class.java)
+    method.isAccessible = true
+    method.invoke(this, surfaceView)
+  } catch (e: Exception) {
+    Log.e("PlayerSurface", "Failed to setVideoSurfaceView", e)
+  }
+}
+
+private fun Player.clearVideoSurfaceViewSafe(surfaceView: SurfaceView) {
+  try {
+    val method = javaClass.getMethod("clearVideoSurfaceView", SurfaceView::class.java)
+    method.isAccessible = true
+    method.invoke(this, surfaceView)
+  } catch (e: Exception) {
+    Log.e("PlayerSurface", "Failed to clearVideoSurfaceView", e)
+  }
+}
+
+private fun Player.setVideoTextureViewSafe(textureView: TextureView) {
+  try {
+    val method = javaClass.getMethod("setVideoTextureView", TextureView::class.java)
+    method.isAccessible = true
+    method.invoke(this, textureView)
+  } catch (e: Exception) {
+    Log.e("PlayerSurface", "Failed to setVideoTextureView", e)
+  }
+}
+
+private fun Player.clearVideoTextureViewSafe(textureView: TextureView) {
+  try {
+    val method = javaClass.getMethod("clearVideoTextureView", TextureView::class.java)
+    method.isAccessible = true
+    method.invoke(this, textureView)
+  } catch (e: Exception) {
+    Log.e("PlayerSurface", "Failed to clearVideoTextureView", e)
   }
 }
 
@@ -143,7 +174,7 @@ private fun <T : View> PlayerSurfaceInternal(
       val listener =
         if (player != null) {
           object : Player.Listener {
-              override fun onSurfaceSizeChanged(width: Int, height: Int) {
+              override fun onVideoSizeChanged(videoSize: VideoSize) {
                 onSurfaceSizeChanged(view)
               }
             }
@@ -190,18 +221,3 @@ private var View.attachedPlayer: Player?
   set(player) {
     tag = player
   }
-
-/**
- * The type of surface used for media playbacks. One of [SURFACE_TYPE_SURFACE_VIEW] or
- * [SURFACE_TYPE_TEXTURE_VIEW].
- */
-@UnstableApi
-@Retention(AnnotationRetention.SOURCE)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.TYPE_PARAMETER)
-@IntDef(SURFACE_TYPE_SURFACE_VIEW, SURFACE_TYPE_TEXTURE_VIEW)
-annotation class SurfaceType
-
-/** Surface type to create [android.view.SurfaceView]. */
-@UnstableApi const val SURFACE_TYPE_SURFACE_VIEW = 1
-/** Surface type to create [android.view.TextureView]. */
-@UnstableApi const val SURFACE_TYPE_TEXTURE_VIEW = 2
