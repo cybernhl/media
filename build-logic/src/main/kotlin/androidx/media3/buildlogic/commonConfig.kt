@@ -26,7 +26,7 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 @Suppress("RAWTYPES", "UNCHECKED_CAST")
-fun Project.configureCommonConfig(android: Any, libs: VersionCatalog) {
+fun Project.configureCommonConfig(android: CommonExtension<*, *, *, *, *, *>, libs: VersionCatalog) {
   (android as CommonExtension<*, *, *, *, *, *>).apply {
     compileSdk = libs.findVersion("compileSdkVersion").get().requiredVersion.toInt()
 
