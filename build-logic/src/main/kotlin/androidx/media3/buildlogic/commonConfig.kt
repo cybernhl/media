@@ -21,13 +21,13 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
-fun Project.configureCommonConfig(android: CommonExtension<*, *, *, *, *, *>, libs: VersionCatalog) {
-  android.apply {
+@Suppress("RAWTYPES", "UNCHECKED_CAST")
+fun Project.configureCommonConfig(android: Any, libs: VersionCatalog) {
+  (android as CommonExtension<*, *, *, *, *, *>).apply {
     compileSdk = libs.findVersion("compileSdkVersion").get().requiredVersion.toInt()
 
     defaultConfig.apply {
