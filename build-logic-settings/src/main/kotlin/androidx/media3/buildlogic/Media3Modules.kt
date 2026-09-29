@@ -115,8 +115,8 @@ object Media3Modules {
           "media3-effect-lottie",
           "Media3 Effect Lottie module",
         ),
-//      "lib-effect-ndk" to
-//        Media3Module("libraries/effect_ndk", "media3-effect-ndk", "Media3 Effect NDK module"),
+      "lib-effect-ndk" to
+        Media3Module("libraries/effect_ndk", "media3-effect-ndk", "Media3 Effect NDK module"),
       "lib-exoplayer" to
         Media3Module(
           "libraries/exoplayer",
