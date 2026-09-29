@@ -82,9 +82,11 @@ runnerVersion = "1.7.0"
 kotlinxDatetimeVersion = "0.6.1"
 kermitVersion = "2.0.4"
 
-jetbrains-compose-multiplatform = "1.11.0"
+jetbrains-compose-multiplatform = "1.11.1"
+jetbrains-compose-hot-reload = "1.2.0"
+jetbrains-compose-material3 = "1.4.3"
 # https://mvnrepository.com/artifact/org.jetbrains.androidx.lifecycle/lifecycle-viewmodel-compose
-jetbrains-lifecycle = "2.10.0"
+jetbrains-lifecycle = "2.10.0" #2.11.0' requires Android Gradle plugin 9.1.0 or higher.
 # https://mvnrepository.com/artifact/org.jetbrains.androidx.navigation/navigation-compose
 jetbrains-navigation = "2.9.2"
 jetbrains-navigationevent = "1.1.0"
@@ -200,12 +202,12 @@ jetbrains-compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-t
 jetbrains-compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "jetbrains-compose-multiplatform" }
 jetbrains-compose-foundation-layout = { module = "org.jetbrains.compose.foundation:foundation-layout", version.ref = "jetbrains-compose-multiplatform" }
 jetbrains-compose-material = { module = "org.jetbrains.compose.material:material", version.ref = "jetbrains-compose-multiplatform" }
-jetbrains-compose-material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "jetbrains-compose-multiplatform" }
-jetbrains-compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version = "1.7.3" }
+jetbrains-compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version = "1.7.3" }
 jetbrains-compose-material-ripple = { module = "org.jetbrains.compose.material:material-ripple", version.ref = "jetbrains-compose-multiplatform" }
-jetbrains-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "jetbrains-compose-multiplatform" }
-#jetbrains-compose-material3-window-size-class = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "jetbrains-compose-multiplatform" }
-jetbrains-compose-material3-adaptive-navigation-suite = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "jetbrains-compose-multiplatform" }
+jetbrains-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "jetbrains-compose-material3" }
+#jetbrains-compose-material3-window-size-class = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "jetbrains-compose-material3" }
+jetbrains-compose-material3-adaptive-navigation-suite = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "jetbrains-compose-material3" }
 jetbrains-compose-animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "jetbrains-compose-multiplatform" }
 jetbrains-compose-animation-core = { module = "org.jetbrains.compose.animation:animation-core", version.ref = "jetbrains-compose-multiplatform" }
 jetbrains-compose-animation-graphics = { module = "org.jetbrains.compose.animation:animation-graphics", version.ref = "jetbrains-compose-multiplatform" }
