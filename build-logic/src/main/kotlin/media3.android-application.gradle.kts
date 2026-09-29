@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import androidx.media3.buildlogic.configureCommonConfig
+import com.android.build.api.dsl.ApplicationExtension
 
 plugins { id("com.android.application") }
 
@@ -19,7 +20,7 @@ group = "androidx.media3"
 
 val libs: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-android {
+extensions.configure<ApplicationExtension> {
   configureCommonConfig(android = this, libs)
 
   buildTypes { getByName("debug") { isJniDebuggable = true } }
